@@ -3,5 +3,8 @@
   <form action="/signUp" method="post">
     <%- include('partials/form-content') -%>
   </form>
+  <% if(error) { %>
+    <div class="error"><%= error %></div>
+  <% } %>
 </div>
 <%- include('partials/footer') -%>

@@ -55,3 +55,46 @@ body {
 .footer {
   margin-top: auto;
 }
+
+.chat {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat__box {
+  height: 400px;
+  width: 500px;
+  margin: 100px auto;
+  background-color: #f4f4f2;
+  display: flex;
+  border-radius: 8px;
+  border: 1px solid lightgrey;
+}
+
+.chat__sidebar {
+  flex: 0.3;
+  border-right: 1px solid lightgrey;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.chat__messages {
+  flex: 0.7;
+}
+
+.chat__room {
+  border-bottom: 1px solid lightgrey;
+}
+
+.chat__room > p {
+  margin-top: auto;
+  margin-bottom: auto;
+  padding: 10px;
+}
+
+.error {
+  background-color: rgb(201, 126, 126);
+  padding: 10px;
+  border-radius: 7px;
+}
