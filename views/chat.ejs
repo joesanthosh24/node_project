@@ -4,13 +4,17 @@
   <h3>Hello <%= email %></h3>
   <div class="chat__box">
     <div class="chat__sidebar">
-      <% rooms.forEach(({ name }, index) => { %>
+      <% rooms.forEach(({ name, id }) => { %>
       <div class="chat__room">
-        <p id="room-<%= index %>"><%= name %></p>
+        <p class="name" id="name-<%= id %>"><%= name %></p>
       </div>
       <% }) %>
     </div>
     <div class="chat__messages">
+      <div class="chat__chatBox"></div>
+      <div class="chat__chatBottom">
+        <button class="btn btn-sm btn-primary disabled">Enter Room</button>
+      </div>
     </div>
   </div>
 </div>

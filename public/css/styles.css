@@ -81,6 +81,8 @@ body {
 
 .chat__messages {
   flex: 0.7;
+  display: flex;
+  flex-direction: column;
 }
 
 .chat__room {
@@ -93,8 +95,28 @@ body {
   padding: 10px;
 }
 
+.chat__chatBox {
+  flex: 0.9;
+}
+
+.chat__chatBottom {
+  flex: 0.1;
+}
+
+.chat__chatBottom > button {
+  margin-top: 5px;
+}
+
 .error {
   background-color: rgb(201, 126, 126);
   padding: 10px;
   border-radius: 7px;
+}
+
+.chatBottom__show {
+  border-top: 0.5px solid grey;
+}
+
+.disabled {
+  display: none;
 }

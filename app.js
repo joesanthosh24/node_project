@@ -5,9 +5,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const rooms = [
-  { name: "Room 1", people: [], messages: [] },
-  { name: "Room 2", people: [], messages: [] },
-  { name: "Room 3", people: [], messages: [] },
+  { name: "Room 1", people: [], messages: [], id: 1 },
+  { name: "Room 2", people: [], messages: [], id: 2 },
+  { name: "Room 3", people: [], messages: [], id: 3 },
 ];
 
 const people = [];
