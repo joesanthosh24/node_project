@@ -1,16 +1,41 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
+const mongoose = require("mongoose");
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const rooms = [
-  { name: "Room 1", people: [], messages: [], id: 1 },
-  { name: "Room 2", people: [], messages: [], id: 2 },
-  { name: "Room 3", people: [], messages: [], id: 3 },
-];
+const Schema = mongoose.Schema;
 
-const people = [];
+mongoose.connect("localhost:27017/chatDB");
+
+const messageSchema = {
+  message: { type: String, required: true },
+  room: { type: Schema.Types.ObjectId, ref: 'Room' }
+}
+
+const Message = mongoose.model("Message", messageSchema);
+
+const poepleSchema = {
+  name: { type: String, required: true },
+  messages: { type: [messageSchema] }
+}
+
+const People = mongoose.model("People", poepleSchema);
+
+const roomSchema = {
+  name: {
+    type: String,
+    required: true
+  },
+  people: {
+    type: [poepleSchema]
+  }
+}
+
+const Room = mongoose.model("Room", roomSchema);
+
 let error = "";
 
 app.use(bodyParser.urlencoded({ extended: true }));
