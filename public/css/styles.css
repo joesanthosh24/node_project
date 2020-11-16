@@ -113,8 +113,32 @@ body {
   border-radius: 7px;
 }
 
-.chatBottom__show {
+/* .chatBottom__show {
   border-top: 0.5px solid grey;
+} */
+
+.chatBottom__show > .chat__input {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.chatBottom__show input {
+  margin-top: 5px;
+  flex: 1;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  border-right: none;
+  border-color: wheat;
+}
+
+.chatBottom__show input:focus {
+  outline: none;
+}
+
+.chatBottom__show button {
+  margin-top: 5px;
+  outline: none;
 }
 
 .disabled {

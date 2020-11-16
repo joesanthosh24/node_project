@@ -1,7 +1,7 @@
 <%- include('partials/header') -%>
 <div class="chat">
   <h2>Chat</h2>
-  <h3>Hello <%= email %></h3>
+  <h3>Hello <span id="user-email"><%= email %></span></h3>
   <div class="chat__box">
     <div class="chat__sidebar">
       <% rooms.forEach(({ name, id }) => { %>
@@ -11,9 +11,20 @@
       <% }) %>
     </div>
     <div class="chat__messages">
-      <div class="chat__chatBox"></div>
+      <div class="chat__chatBox">
+        <% if(currentRoom.messages) { %> 
+          <% currentRoom.messages.forEach(({ message }) => { %>
+            <p>{message}</p>
+          <% }) %>
+        <% } %>
+      </div>
       <div class="chat__chatBottom">
-        <button class="btn btn-sm btn-primary disabled">Enter Room</button>
+        <div class="chat__input disabled">
+          <input type="text" id="message" />
+          <button class="send-btn btn btn-sm">Send</button>
+          <input type="hidden" name="roomId">
+          <input type="hidden" name="user">
+        </div>
       </div>
     </div>
   </div>

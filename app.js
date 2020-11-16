@@ -10,7 +10,7 @@ const Schema = mongoose.Schema;
 
 mongoose.connect("mongodb://localhost:27017/chatDB", {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 });
 
 const messageSchema = {
@@ -33,14 +33,14 @@ const roomSchema = {
     type: String,
     required: true,
   },
-  people: {
-    type: [poepleSchema],
-  },
+  messages: [messageSchema],
 };
 
 const Room = mongoose.model("Room", roomSchema);
 
 let error = "";
+let signedInUser = {};
+let currentRoom = {};
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -71,6 +71,8 @@ app.post("/signUp", (req, res) => {
       error = "";
       person.save();
 
+      signedInUser = person;
+
       res.redirect(`/chat?mail=${email}`);
     } else {
       error = "User with that email already exists";
@@ -83,7 +85,7 @@ app.get("/chat", (req, res) => {
   const email = req.query.mail;
 
   Room.find({}, (err, rooms) => {
-    res.render("chat", { email, rooms });
+    res.render("chat", { email, rooms, currentRoom });
   });
 });
 
@@ -98,10 +100,57 @@ app.post("/signIn", (req, res) => {
   Person.findOne({ email }, (err, foundDocument) => {
     if (foundDocument) {
       error = "";
-      res.redirect(`/chat?mail=${email}`);
+      if (foundDocument.password === password) {
+        signedInUser = foundDocument;
+        res.redirect(`/chat?mail=${email}`);
+      } else {
+        error = "Username and/or password incorrect";
+        console.log(error);
+        res.redirect("/signIn");
+      }
     } else {
       error = "Username and/or password incorrect";
       res.redirect("/signIn");
+    }
+  });
+});
+
+app.post("/enterRoom", (req, res) => {
+  const roomId = req.body.roomId;
+  console.log(roomId);
+
+  Room.findOne({ _id: roomId }, (err, room) => {
+    if (room) {
+      console.log(room);
+      currentRoom = room;
+    } else {
+      console.log("Not found");
+    }
+  });
+});
+
+app.post("/addMessage", (req, res) => {
+  const { message, roomID, user } = req.body;
+  console.log(user);
+
+  Room.findOne({ _id: roomID }, (err, room) => {
+    if (room) {
+      Person.findOne({ email: user }, (error, foundUser) => {
+        if (!error) {
+          if (foundUser) {
+            const newMessage = new Message({ message, room: room._id });
+            newMessage.save();
+
+            room.messages.push(newMessage);
+            foundUser.messages.push(newMessage);
+            res.redirect("/chat?mail=" + user);
+          }
+        } else {
+          console.log(error);
+        }
+      });
+    } else {
+      console.log("Not found");
     }
   });
 });
